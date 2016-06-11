@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/chenqi.github.io.iml" filepath="$PROJECT_DIR$/.idea/chenqi.github.io.iml" />
+      <module fileurl="file://$PROJECT_DIR$/luceneDemo/luceneDemo.iml" filepath="$PROJECT_DIR$/luceneDemo/luceneDemo.iml" />
     </modules>
   </component>
 </project>
