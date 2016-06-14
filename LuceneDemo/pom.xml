@@ -21,6 +21,13 @@
             <artifactId>lucene-analyzers-common</artifactId>
             <version>4.10.3</version>
         </dependency>
+        <!-- http://mvnrepository.com/artifact/org.apache.lucene/lucene-analyzers-smartcn -->
+        <dependency>
+            <groupId>org.apache.lucene</groupId>
+            <artifactId>lucene-analyzers-smartcn</artifactId>
+            <version>4.10.3</version>
+        </dependency>
+
         <!-- http://mvnrepository.com/artifact/commons-io/commons-io -->
         <dependency>
             <groupId>commons-io</groupId>

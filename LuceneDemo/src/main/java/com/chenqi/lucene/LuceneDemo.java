@@ -4,7 +4,12 @@ import java.io.File;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.lucene.analysis.Analyzer;
+import org.apache.lucene.analysis.TokenStream;
+import org.apache.lucene.analysis.cjk.CJKAnalyzer;
+import org.apache.lucene.analysis.cn.smart.SmartChineseAnalyzer;
 import org.apache.lucene.analysis.standard.StandardAnalyzer;
+import org.apache.lucene.analysis.tokenattributes.CharTermAttribute;
+import org.apache.lucene.analysis.tokenattributes.OffsetAttribute;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.document.Field;
 import org.apache.lucene.document.Field.Store;
@@ -26,20 +31,7 @@ public class LuceneDemo {
 
 	// 创建索引库
 	public static void createIndex() throws Exception{
-		// 指定索引库存放的位置
-		String indexPath = "G:\\WorkSpace\\Temp\\Lucene";
-		//将索引库存放到内存中
-		//Directory directory = new RAMDirectory();
-		// 存放到文件系统中
-		Directory directory = FSDirectory.open(new File(indexPath));
-		// 创建分析器
-		Analyzer analyzer = new StandardAnalyzer();
-		// 创建indexWriterConfig对象
-		//第一个参数：Lucene使用的版本
-		//第二个参数：分析器对象
-		IndexWriterConfig config = new IndexWriterConfig(Version.LATEST, analyzer);
-		//创建indexWriter对象
-		IndexWriter indexWriter = new IndexWriter(directory,config);
+		IndexWriter indexWriter = IndexManager.getIndexWriter();
 		//遍历原始文档文件夹下的所有文件 将文件内容读取到程序中
 		File path = new File("G:\\WorkSpace\\Temp\\Lucene\\searchsource");
 		for (File file : path.listFiles()) {
@@ -78,7 +70,7 @@ public class LuceneDemo {
         //创建indexSearcher对象
         IndexSearcher indexSearcher = new IndexSearcher(indexReader);
         //创建查询
-        Query query = new TermQuery(new Term("conten","apache"));
+        Query query = new TermQuery(new Term("content","apache"));
         //执行查询 第一个参数是查询对象 第二个参数是返回结果的最大值
         TopDocs topDocs = indexSearcher.search(query,10);
         System.out.println("查询结果的总数量：" + topDocs.totalHits);
@@ -87,16 +79,52 @@ public class LuceneDemo {
             Document document = indexSearcher.doc(scoreDoc.doc);
             //取文档的属性内容
             System.out.println(document.get("filename"));
-            //System.out.println(document.get("conten"));
+            //System.out.println(document.get("content"));
             System.out.println(document.get("path"));
             System.out.println(document.get("size"));
         }
         indexReader.close();
     }
+
+    /**
+     * 测试分析器的分词效率
+     * @throws Exception
+     */
+    public static void testTokenStream() throws Exception{
+        //创建分词分析器的对象
+        //标准分析器
+        //Analyzer analyzer = new StandardAnalyzer();
+        //CJKAnalyzer
+        //Analyzer analyzer = new CJKAnalyzer();
+        Analyzer analyzer = new SmartChineseAnalyzer();
+        //获取tokenStream
+        //TokenStream tokenStream = analyzer.tokenStream("test", "Serving Web Content with Spring MVC");
+        TokenStream tokenStream = analyzer.tokenStream("test", "我是一只小小鸟");
+        //调整指针至最顶端
+        tokenStream.reset();
+        //获取当前词的一个引用
+        CharTermAttribute termAttribute = tokenStream.addAttribute(CharTermAttribute.class);
+        //获取当前词的偏移量引用
+        OffsetAttribute offsetAttribute = tokenStream.addAttribute(OffsetAttribute.class);
+        //遍历tokenStream
+        while (tokenStream.incrementToken()){
+            //获取当前词的开始位置
+            System.out.println(offsetAttribute.startOffset());
+            //获取当前词内容
+            System.out.println(termAttribute);
+            //获取当前词的结束位置
+            System.out.println(offsetAttribute.endOffset());
+        }
+        tokenStream.close();
+        analyzer.close();
+    }
+
+
 	public static void main(String[] args) {
 		try {
 			//createIndex();
-            searchIndex();
+            //searchIndex();
+            testTokenStream();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
