@@ -1,9 +1,12 @@
 package com.chenqi.lucene;
 
+import org.apache.lucene.analysis.cjk.CJKAnalyzer;
 import org.apache.lucene.document.Document;
 import org.apache.lucene.index.DirectoryReader;
 import org.apache.lucene.index.IndexReader;
 import org.apache.lucene.index.Term;
+import org.apache.lucene.queryparser.classic.MultiFieldQueryParser;
+import org.apache.lucene.queryparser.classic.QueryParser;
 import org.apache.lucene.search.*;
 import org.apache.lucene.store.Directory;
 import org.apache.lucene.store.FSDirectory;
@@ -93,6 +96,29 @@ public class IndexSearch {
         Query query = new MatchAllDocsQuery();
         showResult(query,indexSearcher);
         //关闭indexSearcher
+        indexSearcher.getIndexReader().close();
+    }
+
+    public void testQueryParser() throws Exception{
+        IndexSearcher indexSearcher = getIndexSearcher();
+        //创建一个查询对象
+        //第一个参数：默认搜索域，第二个参数：第二个参数：分析器对象，注意：查询的分析器要和创建索引时使用的分析器一致。
+        QueryParser queryParser = new QueryParser("content",new CJKAnalyzer());
+        Query query = queryParser.parse("lucene and java");
+
+        //执行查询
+        showResult(query,indexSearcher);
+        indexSearcher.getIndexReader().close();
+    }
+
+    public void testMultFieldQueryParser() throws Exception{
+        IndexSearcher indexSearcher = getIndexSearcher();
+        //创建一个查询对象
+        String [] fields = {"filename","content"};
+        MultiFieldQueryParser queryParser = new MultiFieldQueryParser(fields,new CJKAnalyzer());
+        Query query = queryParser.parse("java");
+        //执行查询
+        showResult(query,indexSearcher);
         indexSearcher.getIndexReader().close();
     }
 
