@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <title>JS模拟ajax请求</title>
+</head>
+<script>
+    /**
+     * 流程
+     * 1、创建核心对象
+     * 2、绑定函数
+     * 3、打开连接
+     * 4、发送数据
+     * 5、处理回调函数
+     */
+    function GetXmlHttpObject(){
+        var xmlHttp = null;
+        try {
+            xmlHttp = new XMLHttpRequest();
+        } catch (e) {
+            try {
+                xmlHttp = new ActiveXObject("Msxml2.XMLHTTP");
+            } catch (e) {
+                xmlHttp = new ActiveXObject("Microsoft.XMLHTTP");
+            }
+        }
+        return xmlHttp;
+    }
+
+
+    window.onload = function () {
+        var dm = document.getElementById("btn");
+        dm.onclick = function () {
+            var xmlHttp = GetXmlHttpObject();
+            xmlHttp.onreadystatechange = fn;
+            xmlHttp.open("get","test.jsp",true);
+            xmlHttp.send();
+            function fn(){
+                if (xmlHttp.readyState == 4) {
+                    if (xmlHttp.status == 200) {
+                        document.getElementById("dv").innerHTML = xmlHttp.responseText;
+                    } else{
+                      alert("Problem retrieving data:" + xmlHttp.statusText);
+                    }
+                }
+            }
+        }
+    }
+    
+</script>
+<body>
+    <div id="dv"></div>
+    <button id="btn">AJAX</button>
+</body>
+</html>
