@@ -4,6 +4,7 @@
     <entry_points version="2.0" />
   </component>
   <component name="FrameworkDetectionExcludesConfiguration">
+    <file type="web" url="file://$PROJECT_DIR$/JQueryDemo" />
     <file type="web" url="file://$PROJECT_DIR$/RandomCodeDemo" />
   </component>
   <component name="IdProvider" IDEtalkID="1428AC47F3098AB1CD389B900B307B47" />
@@ -12,6 +13,7 @@
       <list>
         <option value="$PROJECT_DIR$/LuceneDemo/pom.xml" />
         <option value="$PROJECT_DIR$/RandomCodeDemo/pom.xml" />
+        <option value="$PROJECT_DIR$/JQueryDemo/pom.xml" />
       </list>
     </option>
   </component>
