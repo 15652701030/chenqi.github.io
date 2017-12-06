@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
+<<<<<<< 02a0ae84cb6d7f699d27c6c3850b2cc024b68d09
   <component name="EntryPointsManager">
     <entry_points version="2.0" />
   </component>
@@ -7,6 +8,8 @@
     <file type="web" url="file://$PROJECT_DIR$/JQueryDemo" />
     <file type="web" url="file://$PROJECT_DIR$/RandomCodeDemo" />
   </component>
+=======
+>>>>>>> thread-demo
   <component name="IdProvider" IDEtalkID="1428AC47F3098AB1CD389B900B307B47" />
   <component name="MavenProjectsManager">
     <option name="originalFiles">
@@ -17,5 +20,5 @@
       </list>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" assert-keyword="true" jdk-15="true" project-jdk-name="1.7" project-jdk-type="JavaSDK" />
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_6" project-jdk-name="1.8" project-jdk-type="JavaSDK" />
 </project>
