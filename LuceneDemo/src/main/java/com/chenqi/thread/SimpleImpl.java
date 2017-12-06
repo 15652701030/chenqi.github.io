@@ -26,7 +26,9 @@ public class SimpleImpl {
 
         public Integer get() {
             long id = Thread.currentThread().getId();
+
             if (cacheMap.containsKey(id)) {
+                System.out.println("------------id="+id);
                 return cacheMap.get(id);
             }
             return defaultValue;
@@ -43,13 +45,13 @@ public class SimpleImpl {
 
         public void increase() throws InterruptedException {
             value.set(10);
-            Thread.sleep(10);
+            // Thread.sleep(10000);
             System.out.println("increase value: " + value.get());
         }
 
         public void decrease() throws InterruptedException {
             value.set(-10);
-            Thread.sleep(10);
+            // Thread.sleep(10000);
             System.out.println("decrease value: " + value.get());
         }
     }

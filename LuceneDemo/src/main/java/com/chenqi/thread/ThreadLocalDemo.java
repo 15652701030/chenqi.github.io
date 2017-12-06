@@ -8,4 +8,6 @@ package com.chenqi.thread;
  */
 public class ThreadLocalDemo {
     ThreadLocal threadLocal = new ThreadLocal();
+
+
 }
